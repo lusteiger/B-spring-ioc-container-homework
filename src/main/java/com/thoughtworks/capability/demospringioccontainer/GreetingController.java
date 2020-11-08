@@ -1,6 +1,6 @@
 package com.thoughtworks.capability.demospringioccontainer;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Scope("singleton")
 public class GreetingController {
 
-    private final ApplicationContext applicationContext;
-
-    public GreetingController(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+    @Lookup
+    public GreetingService getGreetingService() {
+        return null;
     }
 
     @GetMapping("/greet")
     public String greet() {
-        GreetingService greetingService = applicationContext.getBean(GreetingService.class);
-        return greetingService.sayHi();
+        return getGreetingService().sayHi();
     }
 
 }
